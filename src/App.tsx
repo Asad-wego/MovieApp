@@ -1,23 +1,35 @@
-/*
- * Created by Asad on 11 Mar 2024
- */
-
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {AppNavigator} from './navigations';
+import {navigationRef} from './navigations/navigation-ref';
 
 const App = () => {
+  const routeNameRef = React.useRef<string | undefined>();
+  const onReady = () => {
+    routeNameRef.current = navigationRef.current.getCurrentRoute().name;
+  };
+
+  const onStateChange = async () => {
+    const preRoute = routeNameRef.current;
+    const curRoute = navigationRef.current.getCurrentRoute().name;
+    // TODO: can use previous and current route
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Movie App</Text>
-    </View>
+    // TODO: will add redux in next ticket
+    <NavigationContainer
+      ref={navigationRef}
+      onReady={onReady}
+      onStateChange={onStateChange}>
+      <AppNavigator />
+    </NavigationContainer>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  gestureStyle: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 
