@@ -3,6 +3,8 @@ import {StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {AppNavigator} from './navigations';
 import {navigationRef} from './navigations/navigation-ref';
+import {Provider} from 'react-redux';
+import {store} from './redux/store';
 
 const App = () => {
   const routeNameRef = React.useRef<string | undefined>();
@@ -17,13 +19,14 @@ const App = () => {
   };
 
   return (
-    // TODO: will add redux in next ticket
-    <NavigationContainer
-      ref={navigationRef}
-      onReady={onReady}
-      onStateChange={onStateChange}>
-      <AppNavigator />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer
+        ref={navigationRef}
+        onReady={onReady}
+        onStateChange={onStateChange}>
+        <AppNavigator />
+      </NavigationContainer>
+    </Provider>
   );
 };
 
